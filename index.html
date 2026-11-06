@@ -1,1 +1,161 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>IT Policy Update</title><style>body{font-family:Arial,sans-serif;margin:0;background:#f3f4f6;color:#222}.bar{background:#0b3d91;color:#fff;padding:14px 18px;font-weight:bold}.card{background:#fff;margin:18px;padding:20px;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.15)}button{background:#0b3d91;color:#fff;border:0;padding:14px;width:100%;font-size:17px;border-radius:6px}#j{display:none}li{margin:12px 0}.s{color:#c00;font-weight:bold}</style></head><body><div class="bar">IT Department - Mandatory Notice</div><div class="card" id="p"><h2>Updated Workplace Conduct Policy</h2><p>Policy #69-B has been revised effective immediately. All employees must review and acknowledge the changes below.</p><p>Failure to acknowledge may result in loss of break room privileges.</p><button onclick="document.getElementById('p').style.display='none';document.getElementById('j').style.display='block'">I Acknowledge</button></div><div class="card" id="j"><h2>Approved Copy Room Pick-Up Lines</h2><ul><li>Are you the copy machine? Because you make me want to reproduce.</li><li>I'd let you merge my cells.</li><li>Is that a stapler in your pocket, or are you just happy to see the quarterly report?</li><li>Wanna go back to my desk and make some hard copies?</li><li>You can touch base with me anytime.</li><li>Nice spreadsheet. Mind if I check out your rows?</li><li>I'm not saying you're hot, but the thermostat filed a complaint.</li><li>Let's take this offline.</li></ul><p class="s">HR has been notified that you scanned this.</p><p>What happens in the supply closet stays in the supply closet.</p></div></body></html>
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Maintenance Help Desk</title>
+<style>
+*{box-sizing:border-box}
+body{font-family:Arial,Helvetica,sans-serif;margin:0;background:#eef1f5;color:#1f2937}
+.bar{background:#0b3d91;color:#fff;padding:14px 18px;font-weight:bold;font-size:16px}
+.wrap{max-width:520px;margin:0 auto;padding:16px}
+.card{background:#fff;border-radius:10px;padding:20px;box-shadow:0 1px 4px rgba(0,0,0,.12)}
+h2{margin:0 0 10px;font-size:21px}
+p{line-height:1.45}
+.small{font-size:13px;color:#6b7280}
+.btn{display:block;width:100%;background:#f8fafc;border:1px solid #cbd5e1;border-radius:8px;padding:15px;margin:10px 0;font-size:16px;color:#1f2937;text-align:left;cursor:pointer}
+.btn:active{background:#e2e8f0}
+.primary{background:#0b3d91;color:#fff;border:0;text-align:center;font-weight:bold}
+.answer{background:#fff7ed;border-left:4px solid #f97316;padding:14px;border-radius:6px;font-size:17px;font-weight:bold;margin:12px 0}
+.prog{height:14px;background:#e5e7eb;border-radius:7px;overflow:hidden;margin:10px 0 4px}
+.prog div{height:100%;background:#0b3d91;width:0}
+.pct{text-align:right;font-size:13px;color:#6b7280}
+.err{color:#b91c1c;font-weight:bold;margin:14px 0}
+.spin{width:46px;height:46px;border:5px solid #e5e7eb;border-top-color:#0b3d91;border-radius:50%;margin:20px auto;animation:r 1s linear infinite}
+@keyframes r{to{transform:rotate(360deg)}}
+.clown{font-size:180px;text-align:center;line-height:1.1;animation:pop .5s ease-out}
+@keyframes pop{0%{transform:scale(.2)}80%{transform:scale(1.15)}100%{transform:scale(1)}}
+.hide{display:none}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;text-align:center}
+.wd{font-size:12px;color:#6b7280;font-weight:bold}
+.d{padding:10px 0;border-radius:6px;font-size:15px;cursor:pointer}
+.d.no{background:#f1f5f9;color:#9ca3af;text-decoration:line-through}
+.d.yes{background:#16a34a;color:#fff;font-weight:bold;animation:pulse 1s infinite}
+.d.atlee{background:#fde68a;color:#92400e;text-decoration:line-through}
+@keyframes pulse{50%{transform:scale(1.1)}}
+.cf{position:fixed;top:-12px;width:9px;height:14px;z-index:20;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(105vh) rotate(720deg)}}
+#alarm{position:fixed;inset:0;background:#dc2626;color:#fff;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;z-index:9;animation:flash .5s infinite}
+#alarm h1{font-size:38px;margin:10px 0}
+@keyframes flash{50%{background:#7f1d1d}}
+.siren{font-size:64px;animation:r 1s linear infinite}
+</style></head><body>
+<div class="bar">Maintenance Help Desk</div>
+<div class="wrap"><div class="card" id="view"></div></div>
+
+<div id="alarm">
+<div class="siren">&#128680;</div>
+<h1>HR HAS BEEN NOTIFIED</h1>
+<p style="font-size:18px">...that you complained.</p>
+<button class="btn primary" style="background:#fff;color:#dc2626;max-width:300px" onclick="stopAlarm();menu()">Back to Help Menu</button>
+</div>
+
+<script>
+var V=document.getElementById("view"),timers=[],ac,siren;
+function clear(){timers.forEach(clearInterval);timers=[]}
+function back(){return '<button class="btn primary" onclick="menu()">Back to Help Menu</button>'}
+function menu(){
+ clear();
+ V.innerHTML='<h2>How can we help?</h2><p>Atlee is away from their desk. Our automated assistant is here to help.</p><p class="small">What do you need help with?</p>'+
+ '<button class="btn" onclick="complaint()">File a Complaint</button>'+
+ '<button class="btn" onclick="raise(1)">Request a Raise</button>'+
+ '<button class="btn" onclick="pto()">Request Vacation / PTO</button>'+
+ '<button class="btn" onclick="person()">Talk to a Real Person</button>';
+ window.scrollTo(0,0);
+}
+function complaint(){
+ V.innerHTML='<h2>File a Complaint</h2><p>What is your complaint about?</p>'+
+ '<button class="btn" onclick="filed(0)">About Atlee</button>'+
+ '<button class="btn" onclick="filed(1)">About a tenant</button>'+
+ '<button class="btn" onclick="filed(2)">About a coworker</button>'+back();
+}
+var ANS=["Complaint received and forwarded to Atlee. Atlee has reviewed it and denied it.",
+"Please take a number. Current wait time: 3&ndash;5 business years.",
+"Have you tried just not making eye contact? That's what everyone else does."];
+function filed(n){
+ audioInit();
+ V.innerHTML='<h2>File a Complaint</h2><div class="answer">'+ANS[n]+'</div>'+
+ '<p class="small" style="margin-top:18px">Filing your complaint in S:\\Complaints\\Read Never\\ ...</p>'+
+ '<div class="prog"><div id="pb"></div></div><div class="pct" id="pc">0%</div>';
+ var p=0;
+ timers.push(setTimeout(function(){
+  var t=setInterval(function(){p+=2;document.getElementById("pb").style.width=p+"%";document.getElementById("pc").textContent=p+"%";
+   if(p>=100){clearInterval(t);setTimeout(alarm,500)}},60);timers.push(t);
+ },2200));
+}
+function raise(attempt){
+ var stop=attempt==1?97:99;
+ V.innerHTML='<h2>Request a Raise</h2><p>Processing your request...</p><div class="prog"><div id="pb"></div></div><div class="pct" id="pc">0%</div><div id="out"></div>';
+ var p=0;
+ var t=setInterval(function(){
+  p+=p<60?2:(p<90?1:0.5);if(p>stop)p=stop;
+  document.getElementById("pb").style.width=p+"%";document.getElementById("pc").textContent=Math.floor(p)+"%";
+  if(p>=stop){clearInterval(t);
+   timers.push(setTimeout(function(){
+    if(attempt==1){document.getElementById("out").innerHTML='<p class="err">Unable to process your request. Please try again.</p><button class="btn primary" onclick="raise(2)">Try Again</button>'}
+    else{V.innerHTML='<div class="clown">&#129313;</div><button class="btn" style="text-align:center" onclick="menu()">Back to Help Menu</button>'}
+   },1800))}
+ },80);timers.push(t);
+}
+function person(){
+ V.innerHTML='<h2>Talk to a Real Person</h2><p>Connecting you to a real person...</p><div class="spin"></div>';
+ timers.push(setTimeout(function(){
+  V.innerHTML='<h2>Talk to a Real Person</h2><div class="answer">Sorry, the real person saw you coming and left.</div>'+back();
+ },3500));
+}
+var FIRST=14,SECOND=18,firstGone=false;
+function day(n){var d=new Date();d.setHours(0,0,0,0);d.setDate(d.getDate()+n);return d}
+function fmt(d){return d.toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"})}
+function pto(){firstGone=false;cal('')}
+function cal(msg){
+ clear();
+ var h='<h2>Request Vacation / PTO</h2><p class="small">Select a date. Green dates are available.</p><div class="cal">';
+ ["S","M","T","W","T","F","S"].forEach(function(w){h+='<div class="wd">'+w+'</div>'});
+ var start=day(0).getDay();for(var b=0;b<start;b++)h+='<div></div>';
+ for(var n=0;n<28;n++){
+  var d=day(n),cls="no",fn="taken()";
+  if(n==FIRST&&!firstGone){cls="yes";fn="pick1()"}
+  else if(n==FIRST&&firstGone){cls="atlee";fn="taken()"}
+  else if(n==SECOND&&firstGone){cls="yes";fn="pick2()"}
+  h+='<div class="d '+cls+'" onclick="'+fn+'">'+d.getDate()+'</div>';
+ }
+ h+='</div><div id="cmsg" class="small" style="min-height:20px;margin-top:10px">'+msg+'</div>'+back();
+ V.innerHTML=h;
+}
+function taken(){document.getElementById("cmsg").innerHTML='<span class="err">Unavailable.</span>'}
+function pick1(){
+ V.innerHTML='<h2>Request Vacation / PTO</h2><div class="answer" style="background:#ecfdf5;border-color:#16a34a;color:#166534;font-size:22px;text-align:center">APPROVED!</div><p style="text-align:center">'+fmt(day(FIRST))+'</p>';
+ confetti();
+ timers.push(setTimeout(function(){
+  firstGone=true;
+  V.innerHTML='<h2>Request Vacation / PTO</h2><div class="answer">Just kidding. Request denied. Atlee is already on vacation that day.</div>'+
+  '<button class="btn primary" onclick="cal(\'\')">See Next Available Date</button>'+back();
+ },1800));
+}
+function pick2(){
+ var h='<h2>Request Vacation / PTO</h2><p>'+fmt(day(SECOND))+' is available!</p><p class="small">What time of day would you like off?</p>';
+ ["5:01 PM","6:30 PM","8:00 PM","9:45 PM","11:30 PM"].forEach(function(t){h+='<button class="btn" onclick="pick3(\''+t+'\')">'+t+'</button>'});
+ V.innerHTML=h+back();
+}
+function pick3(t){
+ V.innerHTML='<h2>Request Vacation / PTO</h2><div class="answer" style="background:#ecfdf5;border-color:#16a34a;color:#166534">Approved! Enjoy your vacation from '+t+' to 11:59 PM on '+fmt(day(SECOND))+'.</div><p>Please report to work at 8:00 AM sharp the next morning.</p>'+back();
+ confetti();
+}
+function confetti(){
+ var c=["#ef4444","#f59e0b","#10b981","#3b82f6","#8b5cf6","#ec4899"];
+ for(var i=0;i<80;i++){var e=document.createElement("div");e.className="cf";
+  e.style.left=Math.random()*100+"vw";e.style.background=c[i%6];
+  e.style.animationDuration=(1.5+Math.random()*1.5)+"s";e.style.animationDelay=Math.random()*.4+"s";
+  document.body.appendChild(e);(function(x){setTimeout(function(){x.remove()},3500)})(e)}
+}
+function audioInit(){try{if(!ac)ac=new (window.AudioContext||window.webkitAudioContext)();if(ac.resume)ac.resume()}catch(e){}}
+function alarm(){
+ document.getElementById("alarm").style.display="flex";
+ if(navigator.vibrate)navigator.vibrate([400,150,400,150,400,150,800]);
+ if(ac){var n=0;siren=setInterval(function(){
+  var o=ac.createOscillator(),g=ac.createGain();o.type="square";
+  o.frequency.setValueAtTime(n%2?660:880,ac.currentTime);g.gain.value=.08;
+  o.connect(g);g.connect(ac.destination);o.start();o.stop(ac.currentTime+.35);
+  if(++n>7)clearInterval(siren)},400)}
+}
+function stopAlarm(){document.getElementById("alarm").style.display="none";if(siren)clearInterval(siren);if(navigator.vibrate)navigator.vibrate(0)}
+menu();
+</script>
+</body></html>
