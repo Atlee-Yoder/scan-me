@@ -71,14 +71,12 @@ var ANS=["Complaint received and forwarded to Atlee. Atlee has reviewed it and d
 "Have you tried just not making eye contact? That's what everyone else does."];
 function filed(n){
  audioInit();
- V.innerHTML='<h2>File a Complaint</h2><div class="answer">'+ANS[n]+'</div>'+
- '<p class="small" style="margin-top:18px">Filing your complaint in S:\\Complaints\\Read Never\\ ...</p>'+
+ V.innerHTML='<h2>File a Complaint</h2>'+
+ '<p class="small">Filing your complaint in S:\\Complaints\\Read Never\\ ...</p>'+
  '<div class="prog"><div id="pb"></div></div><div class="pct" id="pc">0%</div>';
  var p=0;
- timers.push(setTimeout(function(){
-  var t=setInterval(function(){p+=2;document.getElementById("pb").style.width=p+"%";document.getElementById("pc").textContent=p+"%";
-   if(p>=100){clearInterval(t);setTimeout(alarm,500)}},60);timers.push(t);
- },2200));
+ var t=setInterval(function(){p+=2;document.getElementById("pb").style.width=p+"%";document.getElementById("pc").textContent=p+"%";
+  if(p>=100){clearInterval(t);setTimeout(alarm,500)}},60);timers.push(t);
 }
 function atleeC(){
  V.innerHTML='<h2>File a Complaint</h2><p class="small">Filing your complaint in S:\\Complaints\\Read Never\\ ...</p>'+
