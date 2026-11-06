@@ -62,8 +62,8 @@ function menu(){
 }
 function complaint(){
  V.innerHTML='<h2>File a Complaint</h2><p>What is your complaint about?</p>'+
- '<button class="btn" onclick="filed(0)">About Atlee</button>'+
- '<button class="btn" onclick="filed(1)">About a tenant</button>'+
+ '<button class="btn" onclick="atleeC()">About Atlee</button>'+
+ '<button class="btn" onclick="maint()">About maintenance</button>'+
  '<button class="btn" onclick="filed(2)">About a coworker</button>'+back();
 }
 var ANS=["Complaint received and forwarded to Atlee. Atlee has reviewed it and denied it.",
@@ -79,6 +79,27 @@ function filed(n){
   var t=setInterval(function(){p+=2;document.getElementById("pb").style.width=p+"%";document.getElementById("pc").textContent=p+"%";
    if(p>=100){clearInterval(t);setTimeout(alarm,500)}},60);timers.push(t);
  },2200));
+}
+function atleeC(){
+ V.innerHTML='<h2>File a Complaint</h2><p class="small">Filing your complaint in S:\\Complaints\\Read Never\\ ...</p>'+
+ '<div class="prog"><div id="pb"></div></div><div class="pct" id="pc">0%</div><div id="out"></div>';
+ var p=0;
+ var t=setInterval(function(){p+=2;document.getElementById("pb").style.width=p+"%";document.getElementById("pc").textContent=p+"%";
+  if(p>=100){clearInterval(t);
+   document.getElementById("out").innerHTML='<div class="answer">Complaint received and forwarded to Atlee. Atlee has reviewed it and denied it.</div>'+back()}},60);
+ timers.push(t);
+}
+function maint(){
+ V.innerHTML='<h2>File a Complaint</h2><div class="answer">Have you tried turning it off and back on again?</div>'+
+ '<button class="btn" style="text-align:center" onclick="maintYes()">Yes</button>'+
+ '<button class="btn" style="text-align:center" onclick="maintNo()">No</button>'+back();
+}
+function maintNo(){
+ V.innerHTML='<h2>File a Complaint</h2><div class="answer">Please try turning it off and back on again.</div>'+
+ '<button class="btn" style="text-align:center" onclick="maint()">OK, I tried it</button>'+back();
+}
+function maintYes(){
+ V.innerHTML='<h2>File a Complaint</h2><div class="answer">Maintenance has reviewed your complaint and determined it&#39;s a tenant issue.</div>'+back();
 }
 function raise(attempt){
  var stop=attempt==1?97:99;
